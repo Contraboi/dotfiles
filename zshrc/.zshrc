@@ -155,5 +155,8 @@ compinit
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 export PATH="$PATH:$HOME/go/bin"
 export PATRINUS_DB_URL="PATRINUS_DB_URL=postgres://postgres:password@localhost:5432/patrinus?sslmode=disable"
-# alias air='~/.air'
+
 alias logout='loginctl terminate-user contraboi'
+
+eval "$(zoxide init zsh)"
+alias cd="z"
