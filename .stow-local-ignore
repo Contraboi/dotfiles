@@ -1,9 +1,9 @@
 # Uncomment this when on linux, these are not used on macos 
-# /wofi
-# /waybar
-# /i3
-# /hyprland
-# /backgrounds
+#/wofi
+#/waybar
+#/i3
+#/hyprland
+#/backgrounds
 
 \.git
 \.gitignore
