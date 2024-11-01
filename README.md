@@ -1,5 +1,5 @@
-# .dotfiles
-This directory contains the dotfiles 
+# .configfiles
+This directory contains the config files 
 
 ## Requirements
 
@@ -8,7 +8,7 @@ Ensure you have the following installed on your system
 ### Git
 
 ```
-pacman -S git
+yay -S git
 ```
 
 ```
@@ -18,7 +18,7 @@ brew install git
 ### Stow
 
 ```
-pacman -S stow
+yay -S stow
 ```
 
 ```
@@ -30,8 +30,8 @@ brew install stow
 First, check out the dotfiles repo in your $HOME directory using git
 
 ```
-$ git clone git@github.com:Contraboi/.dotfiles.git
-$ cd .dotfiles
+$ git clone git@github.com:Contraboi/.configfiles.git
+$ cd .configfiles
 ```
 
 then use GNU stow to create symlinks

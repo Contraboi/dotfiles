@@ -1,4 +1,9 @@
-# Comments and blank lines are allowed.
+# Uncomment this when on linux, these are not used on macos 
+# /wofi
+# /waybar
+# /i3
+# /hyprland
+# /backgrounds
 
 \.git
 \.gitignore
