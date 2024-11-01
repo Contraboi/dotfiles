@@ -1,4 +1,4 @@
-@import "mocha.css";
+@import "tokyio-night.css";
 
 * {
 	font-family: "MesloLGS Nerd Font Mono Bold";
@@ -9,11 +9,11 @@
 
 window#waybar {
 	background: transparent;
-	background-color: @crust;
-	color: @overlay0;
+	background-color: @background;
+	color: @selection;
 	transition-property: background-color;
 	transition-duration: 0.1s;
-	border-bottom: 1px solid @overlay1;
+	border-bottom: 1px solid @comment;
 }
 
 #window {
@@ -30,8 +30,8 @@ button {
 
 button:hover {
 	background: inherit;
-	color: @mauve;
-	border-top: 2px solid @mauve;
+	color: @cyan;
+	border-top: 2px solid @cyan;
 }
 
 #workspaces button {
@@ -40,18 +40,18 @@ button:hover {
 
 #workspaces button.focused {
 	background-color: rgba(0, 0, 0, 0.3);
-	color: @rosewater;
-	border-top: 2px solid @rosewater;
+	color: @cyan;
+	border-top: 2px solid @cyan;
 }
 
 #workspaces button.active {
 	background-color: rgba(0, 0, 0, 0.3);
-	color: @mauve;
-	border-top: 2px solid @mauve;
+	color: @cyan;
+	border-top: 2px solid @cyan;
 }
 
 #workspaces button.urgent {
-	background-color: #eb4d4b;
+	background-color: @red;
 }
 
 #pulseaudio,
@@ -76,18 +76,18 @@ button:hover {
 }
 
 #clock {
-	color: @maroon;
-	border-bottom: 2px solid @maroon;
+	color: @orange;
+	border-bottom: 2px solid @orange;
 }
 
 #clock.date {
-	color: @mauve;
-	border-bottom: 2px solid @mauve;
+	color: @orange;
+	border-bottom: 2px solid @orange;
 }
 
 #pulseaudio {
-	color: @blue;
-	border-bottom: 2px solid @blue;
+	color: @green;
+	border-bottom: 2px solid @green;
 }
 
 #network {
@@ -104,10 +104,6 @@ button:hover {
 	color: @red;
 }
 
-#battery {
-	color: @green;
-	border-bottom: 2px solid @green;
-}
 
 /* If workspaces is the leftmost module, omit left margin */
 .modules-left>widget:first-child>#workspaces {
@@ -120,7 +116,7 @@ button:hover {
 }
 
 #custom-vpn {
-	color: @lavender;
+	color: @purple;
 	border-radius: 15px;
 	padding-left: 6px;
 	padding-right: 6px;
