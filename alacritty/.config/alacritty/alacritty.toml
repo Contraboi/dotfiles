@@ -1,0 +1,30 @@
+import = [
+    "~/.config/alacritty/themes/themes/tokyo-night.toml"
+]
+
+[env]
+TERM = "xterm-256color"
+
+[window]
+padding.x = 10
+padding.y = 10
+opacity = 0.85
+blur = true 
+startup_mode="Maximized"
+option_as_alt = "Both"
+decorations = "Buttonless"
+
+[font]
+size = 14 
+
+[colors]
+vi_mode_cursor = { text = "#000000", cursor = "#ffffff" }
+    
+[colors.primary]
+background = "#000000"
+
+[keyboard]
+bindings = [
+  { key = "l", mods = "Alt", chars = "\u001BF" },
+  { key = "h",  mods = "Alt", chars = "\u001BB" },
+]
