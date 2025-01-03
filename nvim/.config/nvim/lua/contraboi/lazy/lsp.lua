@@ -17,7 +17,8 @@ return {
   config = function()
     local cmp = require 'cmp'
     local cmp_lsp = require 'cmp_nvim_lsp'
-    local capabilities = vim.tbl_deep_extend('force', {}, vim.lsp.protocol.make_client_capabilities(), cmp_lsp.default_capabilities())
+    local capabilities = vim.tbl_deep_extend('force', {}, vim.lsp.protocol.make_client_capabilities(),
+      cmp_lsp.default_capabilities())
 
     vim.api.nvim_create_autocmd('LspAttach', {
       group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
@@ -59,6 +60,8 @@ return {
         -- Execute a code action, usually your cursor needs to be on top of an error
         -- or a suggestion from your LSP for this to activate.
         map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
+
+        map('<leader>of', vim.diagnostic.open_float, '[O]pen [F]loat diagnostics')
 
         -- Opens a popup that displays documentation about the word under your cursor
         --  See `:help K` for why this keymap.
@@ -102,7 +105,8 @@ return {
     require('mason-lspconfig').setup {
       require('neodev').setup {
         on_attach = function(client, bufnr)
-          vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>dd', '<cmd>lua require("neodev").open()<CR>', { noremap = true, silent = true })
+          vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>dd', '<cmd>lua require("neodev").open()<CR>',
+            { noremap = true, silent = true })
         end,
       },
       ensure_installed = {

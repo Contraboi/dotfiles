@@ -97,6 +97,8 @@ plugins=(git zsh-autosuggestions)
 export PATH="$PATH:$HOME/.docker/bin"
 export PATH="$PATH:$HOME/.dotnet/tools"
 
+export PATH="/usr/local/bin:$PATH"
+
 eval "$(oh-my-posh init zsh --config ~/.dotfiles/ohmyposh/zen.toml)"
 
 
@@ -106,9 +108,6 @@ alias ls="eza --color=always --long --git --no-filesize --icons=always --no-time
 # nvim
 alias v='nvim'
 
-# zioxide
-# alias cd="z"
-
 # Set up fzf key bindings and auto-completion
 eval "$(fzf --zsh)"
 
@@ -117,12 +116,24 @@ export FZF_DEFAULT_COMMAND="fd --hidden --strip-cwd-prefix --exclude .git"
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND="fd --type=d --hidden --strip-cwd-prefix --exclude .git"
 
+source ~/dotfiles/scripts/fzf-git.sh 
+
 _fzf_compgen_path() {
   fd --hidden --follow --exclude .git . "$1"
 }
 
 fzf_compgen_dir() {
   fd --type d --hidden --follow --exclude .git . "$1"
+}
+
+# Redefine this function to change the options
+_fzf_git_fzf() {
+  fzf --height=50% --tmux 90%,70% \
+    --layout=reverse --multi --min-height=20 --border \
+    --border-label-pos=2 \
+    --color='header:italic:underline,label:blue' \
+    --preview-window='right,50%,border-left' \
+    --bind='ctrl-/:change-preview-window(down,50%,border-top|hidden|)' "$@"
 }
 
 # better cat
@@ -139,7 +150,6 @@ setopt hist_verify
 bindkey '^[[A' history-search-backward
 bindkey '^[[B' history-search-forward
 
-
 # Lines configured by zsh-newuser-install
 HISTFILE=~/.histfile
 HISTSIZE=1000
@@ -152,11 +162,17 @@ zstyle :compinstall filename '/home/contraboi/.zshrc'
 autoload -Uz compinit
 compinit
 
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 export PATH="$PATH:$HOME/go/bin"
-export PATRINUS_DB_URL="PATRINUS_DB_URL=postgres://postgres:password@localhost:5432/patrinus?sslmode=disable"
 
 alias logout='loginctl terminate-user contraboi'
 
 eval "$(zoxide init zsh)"
 alias cd="z"
+alias g="git"
+
+source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
