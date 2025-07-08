@@ -40,6 +40,7 @@ local utils = {
         -- Preview hunk
         map('n', '<leader>hp', gs.preview_hunk, { desc = '[H]unk [P]review' })
         map('n', '<leader>hr', gs.reset_hunk, { desc = '[H]unk [R]eset' })
+        map('n', '<leader>hs', gs.stage_hunk, { desc = '[H]unk [S]stage' })
         map('v', '<leader>hr', function() gs.reset_hunk { vim.fn.line('.'), vim.fn.line('v') } end,
           { desc = '[H]unk [R]eset' })
         map('n', '<leader>hb', function() gs.blame_line { full = true } end, { desc = '[H]unk [B]lame' })

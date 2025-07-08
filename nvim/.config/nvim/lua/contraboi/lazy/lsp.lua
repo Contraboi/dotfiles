@@ -61,6 +61,31 @@ return {
         -- or a suggestion from your LSP for this to activate.
         map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
+        -- Add TypeScript specific keybindings (available in all TS/JS files)
+        -- Make the keybinding available in all files as it will only activate
+        -- when tsserver is the active language server
+        map('<leader>ai', function()
+          vim.lsp.buf.code_action({
+            context = {
+              only = { "source.addMissingImports" }
+            }
+          })
+        end, '[A]dd Missing [I]mports')
+
+        map('<leader>oi', function()
+          local bufnr = vim.api.nvim_get_current_buf()
+          local filetype = vim.api.nvim_buf_get_option(bufnr, 'filetype')
+
+          if filetype == "typescript" or filetype == "javascript" or
+              filetype == "typescriptreact" or filetype == "javascriptreact" then
+            vim.lsp.buf.execute_command({
+              command = "_typescript.organizeImports",
+              arguments = { vim.api.nvim_buf_get_name(0) },
+              title = "Organize Imports"
+            })
+          end
+        end, '[O]rganize [I]mports')
+
         map('<leader>of', vim.diagnostic.open_float, '[O]pen [F]loat diagnostics')
 
         -- Opens a popup that displays documentation about the word under your cursor
@@ -76,7 +101,6 @@ return {
         --    See `:help CursorHold` for information about when this is executed
         --
         -- When you move your cursor, the highlights will be cleared (the second autocommand).
-        local client = vim.lsp.get_client_by_id(event.data.client_id)
         if client and client.server_capabilities.documentHighlightProvider then
           vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
             buffer = event.buf,
@@ -137,6 +161,76 @@ return {
                 },
               },
             },
+          }
+        end,
+
+        ['tsserver'] = function()
+          local lspconfig = require 'lspconfig'
+          lspconfig.tsserver.setup {
+            capabilities = capabilities,
+            settings = {
+              typescript = {
+                inlayHints = {
+                  includeInlayParameterNameHints = 'all',
+                  includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+                  includeInlayFunctionParameterTypeHints = true,
+                  includeInlayVariableTypeHints = true,
+                  includeInlayPropertyDeclarationTypeHints = true,
+                  includeInlayFunctionLikeReturnTypeHints = true,
+                  includeInlayEnumMemberValueHints = true,
+                },
+                suggest = {
+                  autoImports = true,
+                  completeFunctionCalls = true,
+                },
+                updateImportsOnFileMove = {
+                  enabled = "always",
+                },
+                implementationsCodeLens = true,
+                referencesCodeLens = true,
+              },
+              javascript = {
+                inlayHints = {
+                  includeInlayParameterNameHints = 'all',
+                  includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+                  includeInlayFunctionParameterTypeHints = true,
+                  includeInlayVariableTypeHints = true,
+                  includeInlayPropertyDeclarationTypeHints = true,
+                  includeInlayFunctionLikeReturnTypeHints = true,
+                  includeInlayEnumMemberValueHints = true,
+                },
+                suggest = {
+                  autoImports = true,
+                  completeFunctionCalls = true,
+                },
+                updateImportsOnFileMove = {
+                  enabled = "always",
+                },
+                implementationsCodeLens = true,
+                referencesCodeLens = true,
+              },
+            },
+            commands = {
+              OrganizeImports = {
+                function()
+                  vim.lsp.buf.execute_command({
+                    command = "_typescript.organizeImports",
+                    arguments = { vim.api.nvim_buf_get_name(0) }
+                  })
+                end,
+                description = "Organize Imports"
+              },
+              AddMissingImports = {
+                function()
+                  vim.lsp.buf.code_action({
+                    context = {
+                      only = { "source.addMissingImports" }
+                    }
+                  })
+                end,
+                description = "Add Missing Imports"
+              }
+            }
           }
         end,
       },
