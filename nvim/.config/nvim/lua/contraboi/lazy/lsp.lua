@@ -17,8 +17,7 @@ return {
   config = function()
     local cmp = require 'cmp'
     local cmp_lsp = require 'cmp_nvim_lsp'
-    local capabilities = vim.tbl_deep_extend('force', {}, vim.lsp.protocol.make_client_capabilities(),
-      cmp_lsp.default_capabilities())
+    local capabilities = vim.tbl_deep_extend('force', {}, vim.lsp.protocol.make_client_capabilities(), cmp_lsp.default_capabilities())
 
     vim.api.nvim_create_autocmd('LspAttach', {
       group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
@@ -65,24 +64,23 @@ return {
         -- Make the keybinding available in all files as it will only activate
         -- when tsserver is the active language server
         map('<leader>ai', function()
-          vim.lsp.buf.code_action({
+          vim.lsp.buf.code_action {
             context = {
-              only = { "source.addMissingImports" }
-            }
-          })
+              only = { 'source.addMissingImports' },
+            },
+          }
         end, '[A]dd Missing [I]mports')
 
         map('<leader>oi', function()
           local bufnr = vim.api.nvim_get_current_buf()
           local filetype = vim.api.nvim_buf_get_option(bufnr, 'filetype')
 
-          if filetype == "typescript" or filetype == "javascript" or
-              filetype == "typescriptreact" or filetype == "javascriptreact" then
-            vim.lsp.buf.execute_command({
-              command = "_typescript.organizeImports",
+          if filetype == 'typescript' or filetype == 'javascript' or filetype == 'typescriptreact' or filetype == 'javascriptreact' then
+            vim.lsp.buf.execute_command {
+              command = '_typescript.organizeImports',
               arguments = { vim.api.nvim_buf_get_name(0) },
-              title = "Organize Imports"
-            })
+              title = 'Organize Imports',
+            }
           end
         end, '[O]rganize [I]mports')
 
@@ -129,18 +127,16 @@ return {
     require('mason-lspconfig').setup {
       require('neodev').setup {
         on_attach = function(client, bufnr)
-          vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>dd', '<cmd>lua require("neodev").open()<CR>',
-            { noremap = true, silent = true })
+          vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>dd', '<cmd>lua require("neodev").open()<CR>', { noremap = true, silent = true })
         end,
       },
       ensure_installed = {
         'lua_ls',
-        'tsserver',
+        'typescript_language_server',
         'tailwindcss',
         'cssls',
         'html',
         'eslint',
-        'gopls',
       },
       handlers = {
         function(server_name) -- default handler (optional)
@@ -164,7 +160,7 @@ return {
           }
         end,
 
-        ['tsserver'] = function()
+        ['typescript_language_server'] = function()
           local lspconfig = require 'lspconfig'
           lspconfig.tsserver.setup {
             capabilities = capabilities,
@@ -184,7 +180,7 @@ return {
                   completeFunctionCalls = true,
                 },
                 updateImportsOnFileMove = {
-                  enabled = "always",
+                  enabled = 'always',
                 },
                 implementationsCodeLens = true,
                 referencesCodeLens = true,
@@ -204,7 +200,7 @@ return {
                   completeFunctionCalls = true,
                 },
                 updateImportsOnFileMove = {
-                  enabled = "always",
+                  enabled = 'always',
                 },
                 implementationsCodeLens = true,
                 referencesCodeLens = true,
@@ -213,24 +209,24 @@ return {
             commands = {
               OrganizeImports = {
                 function()
-                  vim.lsp.buf.execute_command({
-                    command = "_typescript.organizeImports",
-                    arguments = { vim.api.nvim_buf_get_name(0) }
-                  })
+                  vim.lsp.buf.execute_command {
+                    command = '_typescript.organizeImports',
+                    arguments = { vim.api.nvim_buf_get_name(0) },
+                  }
                 end,
-                description = "Organize Imports"
+                description = 'Organize Imports',
               },
               AddMissingImports = {
                 function()
-                  vim.lsp.buf.code_action({
+                  vim.lsp.buf.code_action {
                     context = {
-                      only = { "source.addMissingImports" }
-                    }
-                  })
+                      only = { 'source.addMissingImports' },
+                    },
+                  }
                 end,
-                description = "Add Missing Imports"
-              }
-            }
+                description = 'Add Missing Imports',
+              },
+            },
           }
         end,
       },

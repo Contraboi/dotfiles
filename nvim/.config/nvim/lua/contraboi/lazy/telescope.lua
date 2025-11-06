@@ -1,25 +1,3 @@
-local actions = require("telescope.actions")
-
-local function filename_first(_, path)
-  local tail = vim.fs.basename(path)
-  local parent = vim.fs.dirname(path)
-  if parent == "." then
-    return tail
-  end
-  print(tail, parent)
-  return string.format("%s\t\t%s", tail, parent)
-end
-
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = "TelescopeResults",
-  callback = function(ctx)
-    vim.api.nvim_buf_call(ctx.buf, function()
-      vim.fn.matchadd("TelescopeParent", "\t\t.*$")
-      vim.api.nvim_set_hl(0, "TelescopeParent", { link = "Comment" })
-    end)
-  end,
-})
-
 return { -- Fuzzy Finder (files, lsp, etc)
   'nvim-telescope/telescope.nvim',
   event = 'VimEnter',
@@ -45,6 +23,28 @@ return { -- Fuzzy Finder (files, lsp, etc)
     { 'nvim-tree/nvim-web-devicons',            enabled = vim.g.have_nerd_font },
   },
   config = function()
+    local actions = require("telescope.actions")
+
+    local function filename_first(_, path)
+      local tail = vim.fs.basename(path)
+      local parent = vim.fs.dirname(path)
+      if parent == "." then
+        return tail
+      end
+      print(tail, parent)
+      return string.format("%s\t\t%s", tail, parent)
+    end
+
+    vim.api.nvim_create_autocmd("FileType", {
+      pattern = "TelescopeResults",
+      callback = function(ctx)
+        vim.api.nvim_buf_call(ctx.buf, function()
+          vim.fn.matchadd("TelescopeParent", "\t\t.*$")
+          vim.api.nvim_set_hl(0, "TelescopeParent", { link = "Comment" })
+        end)
+      end,
+    })
+
     -- Telescope is a fuzzy finder that comes with a lot of different things that
     -- it can fuzzy find! It's more than just a "file finder", it can search
     -- many different aspects of Neovim, your workspace, LSP, and more!
