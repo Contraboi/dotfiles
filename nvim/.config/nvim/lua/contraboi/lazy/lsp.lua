@@ -132,7 +132,7 @@ return {
       },
       ensure_installed = {
         'lua_ls',
-        'typescript_language_server',
+        'ts_ls',
         'tailwindcss',
         'cssls',
         'html',
@@ -160,9 +160,9 @@ return {
           }
         end,
 
-        ['typescript_language_server'] = function()
+        ['ts_ls'] = function()
           local lspconfig = require 'lspconfig'
-          lspconfig.tsserver.setup {
+          lspconfig.ts_ls.setup {
             capabilities = capabilities,
             settings = {
               typescript = {
