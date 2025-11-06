@@ -42,10 +42,50 @@ return {
 
     formatters_by_ft = {
       lua             = { 'stylua' },
-      typescript      = { { 'prettierd', 'prettier' } },
-      typescriptreact = { { 'prettierd', 'prettier' } },
-      javascript      = { { 'prettierd', 'prettier' } },
-      javascriptreact = { { 'prettierd', 'prettier' } },
+      -- For JS/TS files, we'll use a custom function to choose between biome and prettier
+      typescript      = function(bufnr)
+        -- Check if biome.json or biome.jsonc exists in the project
+        local biome_config = vim.fn.findfile('biome.json', '.;') ~= '' or vim.fn.findfile('biome.jsonc', '.;') ~= ''
+        if biome_config then
+          return { 'biome' }
+        end
+        return { 'prettierd', 'prettier' }
+      end,
+      typescriptreact = function(bufnr)
+        local biome_config = vim.fn.findfile('biome.json', '.;') ~= '' or vim.fn.findfile('biome.jsonc', '.;') ~= ''
+        if biome_config then
+          return { 'biome' }
+        end
+        return { 'prettierd', 'prettier' }
+      end,
+      javascript      = function(bufnr)
+        local biome_config = vim.fn.findfile('biome.json', '.;') ~= '' or vim.fn.findfile('biome.jsonc', '.;') ~= ''
+        if biome_config then
+          return { 'biome' }
+        end
+        return { 'prettierd', 'prettier' }
+      end,
+      javascriptreact = function(bufnr)
+        local biome_config = vim.fn.findfile('biome.json', '.;') ~= '' or vim.fn.findfile('biome.jsonc', '.;') ~= ''
+        if biome_config then
+          return { 'biome' }
+        end
+        return { 'prettierd', 'prettier' }
+      end,
+      json            = function(bufnr)
+        local biome_config = vim.fn.findfile('biome.json', '.;') ~= '' or vim.fn.findfile('biome.jsonc', '.;') ~= ''
+        if biome_config then
+          return { 'biome' }
+        end
+        return { 'prettierd', 'prettier' }
+      end,
+      jsonc           = function(bufnr)
+        local biome_config = vim.fn.findfile('biome.json', '.;') ~= '' or vim.fn.findfile('biome.jsonc', '.;') ~= ''
+        if biome_config then
+          return { 'biome' }
+        end
+        return { 'prettierd', 'prettier' }
+      end,
       ['*']           = { 'codespell' },
     },
   },
